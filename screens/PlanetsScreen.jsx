@@ -1,4 +1,6 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { useDeviceOrientation } from '@react-native-community/hooks';
+
 
 const planets = [
   { id: '1', name: 'Mercury', type: 'Terrestrial', distance: '77M km',  emoji: '⚫' },
@@ -12,15 +14,23 @@ const planets = [
 ];
 
 export default function PlanetsScreen({ navigation }) {
+  const orientation = useDeviceOrientation();
+  console.log(orientation);
+  const { width, height } = useWindowDimensions();
+  console.log(width, height)
+  const columns = orientation == 'portrait' ? 1 : 2;
+  const cardWidth = (width-48)/columns;
   return (
     <View style={styles.screen}>
       <Text style={styles.heading}>🪐 Planets</Text>
 
       <FlatList
         data={planets}
+        key={columns}
+        numColumns={columns}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={[styles.card, {width: cardWidth}]}>
             <Text style={styles.cardEmoji}>{item.emoji}</Text>
             <View>
               <Text style={styles.cardName}>{item.name}</Text>

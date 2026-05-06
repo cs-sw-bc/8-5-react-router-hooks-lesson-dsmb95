@@ -1,4 +1,6 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { DarkTheme } from '@react-navigation/native';
+import { View, Text, StyleSheet, FlatList, useColorScheme } from 'react-native';
+
 
 const missions = [
   {
@@ -48,18 +50,37 @@ const statusColor = {
   Completed: '#8888aa',
 };
 
-export default function MissionsScreen() {
+const darkTheme = {
+  screen: '#0a0a1a',
+  card: '#14142b',
+  heading: '#ffffff',
+  text: '#aaaacc',
+  year: '#8888aa',
+};
+ 
+const lightTheme = {
+  screen: '#f0f0f5',
+  card: '#ffffff',
+  heading: '#0a0a1a',
+  text: '#444466',
+  year: '#888899',
+};
+
+export default function MissionsScreen({ navigation }) {
+  const theme = useColorScheme();
+  console.log(theme);
+  const scheme = theme == 'light' ? lightTheme : darkTheme;
   return (
     <View style={styles.screen}>
-      <Text style={styles.heading}>🚀 Missions</Text>
+      <Text style={[styles.heading, { backgroundColor: scheme.screen }]}>🚀 Missions</Text>
 
       <FlatList
         data={missions}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardEmoji}>{item.emoji}</Text>
+          <View style={[styles.card, {backgroundColor: scheme.card}]}>
+            <View style={[styles.cardHeader, {backgroundColor: scheme.screen}]}>
+              <Text style={[styles.cardEmoji, {backgroundColor: scheme.card}]}>{item.emoji}</Text>
               <View style={styles.cardMeta}>
                 <Text style={styles.cardName}>{item.name}</Text>
                 <Text style={styles.cardYear}>{item.year}</Text>

@@ -5,10 +5,21 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.screen}>
       <Text style={styles.title}>🚀 SpaceApp</Text>
       <Text style={styles.subtitle}>Where do you want to go?</Text>
+ 
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Planets')}>
+        <Text style={styles.buttonText}>🪐 Planets</Text>
+      </TouchableOpacity>
+ 
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Missions')}>
+        <Text style={styles.buttonText}>🚀 Missions</Text>
+      </TouchableOpacity>
+ 
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Crew')}>
+        <Text style={styles.buttonText}>👨‍🚀 Crew</Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
